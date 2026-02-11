@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Website Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/editor/editor.main.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-magic"></i> AI Website Generator</h1>
+            <p>Simple prompt se professional website banayein</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Step 1: Prompt Input -->
+            <div class="step-card" id="step1">
+                <div class="step-header">
+                    <span class="step-number">1</span>
+                    <h2>Apna Idea Enter Karein</h2>
+                </div>
+                <div class="input-group">
+                    <textarea id="userPrompt" placeholder="Example: Ek restaurant ka website banao jisme menu, gallery aur contact form ho"></textarea>
+                    
+                    <div style="margin-top: 15px;">
+                        <label style="display: block; margin-bottom: 10px; font-weight: 500; color: #333;">
+                            <i class="fas fa-image"></i> Ya Website Image/Link Upload Karein (Optional):
+                        </label>
+                        <input type="file" id="websiteImage" accept="image/*" style="margin-bottom: 10px;">
+                        <input type="url" id="websiteUrl" placeholder="Ya website URL enter karein (https://example.com)" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+                    </div>
+                    
+                    <button onclick="enhancePrompt()" id="enhanceBtn">
+                        <i class="fas fa-wand-magic-sparkles"></i> Prompt Enhance Karein
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Enhanced Prompt -->
+            <div class="step-card" id="step2" style="display:none;">
+                <div class="step-header">
+                    <span class="step-number">2</span>
+                    <h2>Enhanced Prompt</h2>
+                    <button onclick="copyPrompt()" style="margin-left: auto; padding: 8px 15px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+                <div class="enhanced-prompt" id="enhancedPrompt" contenteditable="true" spellcheck="false"></div>
+                <div class="input-group">
+                    <textarea id="modifyPrompt" placeholder="Koi changes chahiye? Example: 'Blue color scheme use karo' ya 'Contact form add karo'"></textarea>
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="generateWebsite()" id="generateBtn">
+                            <i class="fas fa-code"></i> Website Generate Karein
+                        </button>
+                        <button onclick="modifyWebsite()" id="modifyBtn" style="display:none; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <i class="fas fa-edit"></i> Website Modify Karein
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: Generated Website -->
+            <div class="step-card" id="step3" style="display:none;">
+                <div class="step-header">
+                    <span class="step-number">3</span>
+                    <h2>Generated Website</h2>
+                    <button onclick="resetGenerator()" style="margin-left: auto; padding: 8px 15px; background: #ff6b6b; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                        <i class="fas fa-plus"></i> Nayi Website Banao
+                    </button>
+                </div>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchTab('preview')">
+                        <i class="fas fa-eye"></i> Preview
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('editor')">
+                        <i class="fas fa-code"></i> Code Editor
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('pages')">
+                        <i class="fas fa-file-code"></i> Pages
+                    </button>
+                </div>
+
+                <!-- Preview Tab -->
+                <div id="previewTab" class="tab-content active">
+                    <div class="preview-controls">
+                        <select id="pageSelector" onchange="switchPage()">
+                            <option value="0">index.html</option>
+                        </select>
+                        <button onclick="downloadWebsite()">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                    <iframe id="preview" sandbox="allow-scripts allow-same-origin"></iframe>
+                </div>
+
+                <!-- Editor Tab -->
+                <div id="editorTab" class="tab-content">
+                    <div class="editor-controls">
+                        <select id="fileSelector" onchange="switchFile()">
+                            <option value="html">HTML</option>
+                            <option value="css">CSS</option>
+                            <option value="js">JavaScript</option>
+                        </select>
+                        <button onclick="updatePreview()">
+                            <i class="fas fa-sync"></i> Update Preview
+                        </button>
+                    </div>
+                    <div id="codeEditor"></div>
+                </div>
+
+                <!-- Pages Tab -->
+                <div id="pagesTab" class="tab-content">
+                    <div id="pagesList"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="loader" id="loader" style="display:none;">
+            <div class="spinner"></div>
+            <p id="loaderText">Processing...</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
