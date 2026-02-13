@@ -1,5 +1,5 @@
 // Configuration
-let GEMINI_API_KEY = localStorage.getItem('gemini_api_key') || '';
+let GEMINI_API_KEY = localStorage.getItem('AIzaSyCI1X4FGItp95w3sfyeX4ogdES0p6D6_lM') || '';
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent';
 
 // Global variables
